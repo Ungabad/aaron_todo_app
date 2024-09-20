@@ -3,7 +3,13 @@ import "../../public/styles.css"; // External styles
 import todoData from "./todoData.jsx";
 
 // Reusable CheckListItem component
-function CheckListItem({ id, text, completed, handleCheckboxChange }) {
+function CheckListItem({
+  id,
+  text,
+  completed,
+  handleCheckboxChange,
+  handleDeleteItem,
+}) {
   // Inline styles for individual checklist item
   const inlineStyles = {
     display: "flex",
@@ -21,6 +27,7 @@ function CheckListItem({ id, text, completed, handleCheckboxChange }) {
         checked={completed}
         onChange={() => handleCheckboxChange(id)}
       />
+      <button onClick={() => handleDeleteItem(id)}>Delete</button>
     </div>
   );
 }
@@ -55,6 +62,12 @@ function MainC() {
     }
   };
 
+  // Function to handle deleting an item from the list
+  const handleDeleteItem = (id) => {
+    const updatedItems = checklistItems.filter((item) => item.id !== id);
+    setChecklistItems(updatedItems);
+  };
+
   const checklistComponents = checklistItems.map((todo) => (
     <CheckListItem
       key={todo.id}
@@ -62,6 +75,7 @@ function MainC() {
       text={todo.text}
       completed={todo.completed}
       handleCheckboxChange={handleCheckboxChange}
+      handleDeleteItem={handleDeleteItem}
     />
   ));
 

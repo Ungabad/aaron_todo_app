@@ -46,7 +46,7 @@ function MainC() {
   const addNewItem = () => {
     if (newItemText.trim()) {
       const newItem = {
-        id: checklistItems.length + 1, // Generate a new ID (could be improved for uniqueness)
+        id: checklistItems.length + 1,
         text: newItemText,
         completed: false,
       };

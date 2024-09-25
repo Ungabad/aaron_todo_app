@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import "../../public/styles.css"; // External styles
 import todoData from "./todoData.jsx";
 import CheckListItem from "./CheckListItem.jsx";
+import Button from "@mui/material/Button";
+import { pink } from "@mui/material/colors";
+import TextField from "@mui/material/TextField";
 
 // Main component that renders CheckListItem components using map
 function MainC() {
@@ -88,15 +91,22 @@ function MainC() {
 
       {/* Input field and button to add a new item */}
       <div className='card' style={{ marginTop: "20px" }}>
-        <input
+        <TextField
           type='text'
           placeholder='Add new item...'
           value={newItemText}
           onChange={handleInputChange}
         />
-        <button className='card-button' onClick={addNewItem}>
+        <Button
+          size='small'
+          variant='outlined'
+          sx={{ borderColor: pink[800], color: pink[800] }}
+          className='card-button'
+          onClick={addNewItem}
+          style={{ marginLeft: "20px" }}
+        >
           Add Item
-        </button>
+        </Button>
       </div>
     </main>
   );

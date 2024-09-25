@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import { pink } from "@mui/material/colors";
+import Checkbox from "@mui/material/Checkbox";
 
 // Reusable CheckListItem component
 function CheckListItem({
@@ -27,25 +30,43 @@ function CheckListItem({
           // Display text normally when not in edit mode
           <h1>{text}</h1>
         )}
-        <input
-          type='checkbox'
+        <Checkbox
+          sx={{ color: pink[800], "&.Mui-checked": { color: pink[600] } }}
           checked={completed}
           onChange={() => handleCheckboxChange(id)}
         />
         <div className='card-buttons'>
-          <button className='card-button' onClick={() => handleDeleteItem(id)}>
+          <Button
+            size='small'
+            variant='outlined'
+            sx={{ borderColor: pink[800], color: pink[800] }}
+            className='card-button'
+            onClick={() => handleDeleteItem(id)}
+          >
             Delete
-          </button>
+          </Button>
           {isEditing ? (
             // Display Save button when in edit mode
-            <button className='card-button' onClick={() => handleSaveEdit(id)}>
+            <Button
+              size='small'
+              variant='outlined'
+              sx={{ borderColor: pink[800], color: pink[800] }}
+              className='card-button'
+              onClick={() => handleSaveEdit(id)}
+            >
               Save
-            </button>
+            </Button>
           ) : (
             // Display Edit button when not in edit mode
-            <button className='card-button' onClick={() => handleEditItem(id)}>
+            <Button
+              size='small'
+              variant='outlined'
+              sx={{ borderColor: pink[800], color: pink[800] }}
+              className='card-button'
+              onClick={() => handleEditItem(id)}
+            >
               Edit
-            </button>
+            </Button>
           )}
         </div>
       </div>

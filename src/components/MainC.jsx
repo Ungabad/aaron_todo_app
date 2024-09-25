@@ -7,8 +7,13 @@ function CheckListItem({
   id,
   text,
   completed,
+  isEditing,
   handleCheckboxChange,
   handleDeleteItem,
+  handleEditItem,
+  handleSaveEdit,
+  handleEditInputChange,
+  editInputValue,
 }) {
   // Inline styles for individual checklist item
   const inlineStyles = {
@@ -21,13 +26,30 @@ function CheckListItem({
 
   return (
     <div style={inlineStyles}>
-      <h1>{text}</h1>
+      {isEditing ? (
+        // Display input field when in edit mode
+        <input
+          type='text'
+          value={editInputValue}
+          onChange={(e) => handleEditInputChange(e.target.value)}
+        />
+      ) : (
+        // Display text normally when not in edit mode
+        <h1>{text}</h1>
+      )}
       <input
         type='checkbox'
         checked={completed}
         onChange={() => handleCheckboxChange(id)}
       />
       <button onClick={() => handleDeleteItem(id)}>Delete</button>
+      {isEditing ? (
+        // Display Save button when in edit mode
+        <button onClick={() => handleSaveEdit(id)}>Save</button>
+      ) : (
+        // Display Edit button when not in edit mode
+        <button onClick={() => handleEditItem(id)}>Edit</button>
+      )}
     </div>
   );
 }
@@ -36,6 +58,9 @@ function CheckListItem({
 function MainC() {
   const [checklistItems, setChecklistItems] = useState(todoData);
   const [newItemText, setNewItemText] = useState("");
+  const [editItemId, setEditItemId] = useState(null);
+  const [editInputValue, setEditInputValue] = useState("");
+
   const handleCheckboxChange = (id) => {
     setChecklistItems((prevItems) =>
       prevItems.map((item) =>
@@ -68,14 +93,42 @@ function MainC() {
     setChecklistItems(updatedItems);
   };
 
+  // Switch to edit mode for a specific item
+  const handleEditItem = (id) => {
+    const itemToEdit = checklistItems.find((item) => item.id === id);
+    setEditItemId(id);
+    setEditInputValue(itemToEdit.text);
+  };
+
+  // Save the edited item and exit edit mode
+  const handleSaveEdit = (id) => {
+    setChecklistItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, text: editInputValue } : item
+      )
+    );
+    setEditItemId(null); // Exit edit mode
+    setEditInputValue("");
+  };
+
+  // Update the input value while editing
+  const handleEditInputChange = (value) => {
+    setEditInputValue(value);
+  };
+
   const checklistComponents = checklistItems.map((todo) => (
     <CheckListItem
       key={todo.id}
       id={todo.id}
       text={todo.text}
       completed={todo.completed}
+      isEditing={editItemId === todo.id} // Check if this item is in edit mode
       handleCheckboxChange={handleCheckboxChange}
       handleDeleteItem={handleDeleteItem}
+      handleEditItem={handleEditItem}
+      handleSaveEdit={handleSaveEdit}
+      handleEditInputChange={handleEditInputChange}
+      editInputValue={editInputValue}
     />
   ));
 
@@ -97,4 +150,5 @@ function MainC() {
     </main>
   );
 }
+
 export default MainC;

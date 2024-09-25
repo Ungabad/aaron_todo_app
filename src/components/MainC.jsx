@@ -1,68 +1,7 @@
 import React, { useState } from "react";
 import "../../public/styles.css"; // External styles
 import todoData from "./todoData.jsx";
-
-// Reusable CheckListItem component
-function CheckListItem({
-  id,
-  text,
-  completed,
-  isEditing,
-  handleCheckboxChange,
-  handleDeleteItem,
-  handleEditItem,
-  handleSaveEdit,
-  handleEditInputChange,
-  editInputValue,
-}) {
-  // Inline styles for individual checklist item
-  const inlineStyles = {
-    // display: "flex",
-    alignItems: "center",
-    marginBottom: "10px",
-    fontSize: "14px",
-    gap: "25px",
-  };
-
-  return (
-    <div className='main-container'>
-      <div style={inlineStyles} className='card'>
-        {isEditing ? (
-          // Display input field when in edit mode
-          <input
-            type='text'
-            value={editInputValue}
-            onChange={(e) => handleEditInputChange(e.target.value)}
-          />
-        ) : (
-          // Display text normally when not in edit mode
-          <h1>{text}</h1>
-        )}
-        <input
-          type='checkbox'
-          checked={completed}
-          onChange={() => handleCheckboxChange(id)}
-        />
-        <div className='card-buttons'>
-          <button className='card-button' onClick={() => handleDeleteItem(id)}>
-            Delete
-          </button>
-          {isEditing ? (
-            // Display Save button when in edit mode
-            <button className='card-button' onClick={() => handleSaveEdit(id)}>
-              Save
-            </button>
-          ) : (
-            // Display Edit button when not in edit mode
-            <button className='card-button' onClick={() => handleEditItem(id)}>
-              Edit
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
+import CheckListItem from "./CheckListItem.jsx";
 
 // Main component that renders CheckListItem components using map
 function MainC() {
@@ -143,7 +82,7 @@ function MainC() {
   ));
 
   return (
-    <main className='main-container'>
+    <main className='main-container' style={{ boxShadow: "0 4px 6px black" }}>
       {/* Render existing checklist items */}
       {checklistComponents}
 

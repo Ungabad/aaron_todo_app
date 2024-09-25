@@ -17,7 +17,7 @@ function CheckListItem({
 }) {
   // Inline styles for individual checklist item
   const inlineStyles = {
-    display: "flex",
+    // display: "flex",
     alignItems: "center",
     marginBottom: "10px",
     fontSize: "14px",
@@ -25,31 +25,41 @@ function CheckListItem({
   };
 
   return (
-    <div style={inlineStyles}>
-      {isEditing ? (
-        // Display input field when in edit mode
+    <div className='main-container'>
+      <div style={inlineStyles} className='card'>
+        {isEditing ? (
+          // Display input field when in edit mode
+          <input
+            type='text'
+            value={editInputValue}
+            onChange={(e) => handleEditInputChange(e.target.value)}
+          />
+        ) : (
+          // Display text normally when not in edit mode
+          <h1>{text}</h1>
+        )}
         <input
-          type='text'
-          value={editInputValue}
-          onChange={(e) => handleEditInputChange(e.target.value)}
+          type='checkbox'
+          checked={completed}
+          onChange={() => handleCheckboxChange(id)}
         />
-      ) : (
-        // Display text normally when not in edit mode
-        <h1>{text}</h1>
-      )}
-      <input
-        type='checkbox'
-        checked={completed}
-        onChange={() => handleCheckboxChange(id)}
-      />
-      <button onClick={() => handleDeleteItem(id)}>Delete</button>
-      {isEditing ? (
-        // Display Save button when in edit mode
-        <button onClick={() => handleSaveEdit(id)}>Save</button>
-      ) : (
-        // Display Edit button when not in edit mode
-        <button onClick={() => handleEditItem(id)}>Edit</button>
-      )}
+        <div className='card-buttons'>
+          <button className='card-button' onClick={() => handleDeleteItem(id)}>
+            Delete
+          </button>
+          {isEditing ? (
+            // Display Save button when in edit mode
+            <button className='card-button' onClick={() => handleSaveEdit(id)}>
+              Save
+            </button>
+          ) : (
+            // Display Edit button when not in edit mode
+            <button className='card-button' onClick={() => handleEditItem(id)}>
+              Edit
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
@@ -78,7 +88,7 @@ function MainC() {
   const addNewItem = () => {
     if (newItemText.trim()) {
       const newItem = {
-        id: checklistItems.length + 1,
+        id: checklistItems.length + 2,
         text: newItemText,
         completed: false,
       };
@@ -138,14 +148,16 @@ function MainC() {
       {checklistComponents}
 
       {/* Input field and button to add a new item */}
-      <div style={{ marginTop: "20px" }}>
+      <div className='card' style={{ marginTop: "20px" }}>
         <input
           type='text'
           placeholder='Add new item...'
           value={newItemText}
           onChange={handleInputChange}
         />
-        <button onClick={addNewItem}>Add Item</button>
+        <button className='card-button' onClick={addNewItem}>
+          Add Item
+        </button>
       </div>
     </main>
   );

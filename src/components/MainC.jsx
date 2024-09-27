@@ -114,7 +114,6 @@ function MainC() {
       editInputValue={editInputValue}
     />
   ));
-
   return (
     <main className='main-container' style={{ boxShadow: "0 4px 6px black" }}>
       {/* Render existing checklist items */}

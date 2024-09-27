@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../public/styles.css"; // External styles
 import todoData from "./todoData.jsx";
 import CheckListItem from "./CheckListItem.jsx";
@@ -12,6 +12,16 @@ function MainC() {
   const [newItemText, setNewItemText] = useState("");
   const [editItemId, setEditItemId] = useState(null);
   const [editInputValue, setEditInputValue] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        "https://aaron-todo-backend.onrender.com/Todo"
+      );
+      const data = await response.json();
+      setChecklistItems(data.todos);
+    };
+    fetchData();
+  }, []);
 
   const handleCheckboxChange = (id) => {
     setChecklistItems((prevItems) =>
@@ -27,21 +37,38 @@ function MainC() {
   };
 
   // Handle adding a new item to the list
-  const addNewItem = () => {
+  const addNewItem = async () => {
     if (newItemText.trim()) {
       const newItem = {
         id: checklistItems.length + 2,
         text: newItemText,
         completed: false,
       };
+      const response = await fetch(
+        "https://aaron-todo-backend.onrender.com/add-todo",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newItem),
+        }
+      );
+      if (!response.ok) {
+        console.error("Failed to add");
+      }
       setChecklistItems((prevItems) => [...prevItems, newItem]);
       setNewItemText(""); // Reset the input field
     }
   };
 
   // Function to handle deleting an item from the list
-  const handleDeleteItem = (id) => {
+  const handleDeleteItem = async (id) => {
     const updatedItems = checklistItems.filter((item) => item.id !== id);
+    const response = await fetch(
+      `https://aaron-todo-backend.onrender.com/delete-todo/${id}`,
+      { method: "DELETE" }
+    );
     setChecklistItems(updatedItems);
   };
 
@@ -53,11 +80,15 @@ function MainC() {
   };
 
   // Save the edited item and exit edit mode
-  const handleSaveEdit = (id) => {
+  const handleSaveEdit = async (id) => {
     setChecklistItems((prevItems) =>
       prevItems.map((item) =>
         item.id === id ? { ...item, text: editInputValue } : item
       )
+    );
+    const response = await fetch(
+      `https://aaron-todo-backend.onrender.com/delete-todo/${id}`,
+      { method: "POST" }
     );
     setEditItemId(null); // Exit edit mode
     setEditInputValue("");

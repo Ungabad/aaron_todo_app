@@ -18,7 +18,11 @@ function MainC() {
         "https://aaron-todo-backend.onrender.com/Todo"
       );
       const data = await response.json();
-      setChecklistItems(data.todos);
+      if (data.todos.length > 0) {
+        setChecklistItems(data.todos);
+      } else {
+        console.error("No data received from the server.");
+      }
     };
     fetchData();
   }, []);

@@ -12,11 +12,14 @@ function MainC() {
   const [newItemText, setNewItemText] = useState("");
   const [editItemId, setEditItemId] = useState(null);
   const [editInputValue, setEditInputValue] = useState("");
+
+  // Use the correct backend URL for the Express server
+  const apiUrl =
+    import.meta.env.VITE_API_URL || "https://aaron-todo-backend.onrender.com";
+
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        "https://aaron-todo-backend.onrender.com/Todo"
-      );
+      const response = await fetch(`${apiUrl}/todo`);
       const data = await response.json();
       if (data.todo.length > 0) {
         setChecklistItems(data.todo);
@@ -48,16 +51,13 @@ function MainC() {
         text: newItemText,
         completed: false,
       };
-      const response = await fetch(
-        "https://aaron-todo-backend.onrender.com/add-todo",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newItem),
-        }
-      );
+      const response = await fetch(`${apiUrl}/add-todo`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newItem),
+      });
       if (!response.ok) {
         console.error("Failed to add");
       }
@@ -69,10 +69,9 @@ function MainC() {
   // Function to handle deleting an item from the list
   const handleDeleteItem = async (id) => {
     const updatedItems = checklistItems.filter((item) => item.id !== id);
-    const response = await fetch(
-      `https://aaron-todo-backend.onrender.com/delete-todo/${id}`,
-      { method: "DELETE" }
-    );
+    const response = await fetch(`${apiUrl}/delete-todo/${id}`, {
+      method: "DELETE",
+    });
     setChecklistItems(updatedItems);
   };
 
@@ -90,10 +89,9 @@ function MainC() {
         item.id === id ? { ...item, text: editInputValue } : item
       )
     );
-    const response = await fetch(
-      `https://aaron-todo-backend.onrender.com/delete-todo/${id}`,
-      { method: "POST" }
-    );
+    const response = await fetch(`${apiUrl}/delete-todo/${id}`, {
+      method: "POST",
+    });
     setEditItemId(null); // Exit edit mode
     setEditInputValue("");
   };

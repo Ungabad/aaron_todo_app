@@ -58,9 +58,7 @@ function MainC() {
       };
       const response = await fetch(`${apiUrl}/add-todo`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newItem),
       });
       if (!response.ok) {
@@ -74,11 +72,9 @@ function MainC() {
   // Function to handle deleting an item from the list
   const handleDeleteItem = async (id) => {
     const updatedItems = checklistItems.filter((item) => item.id !== id);
-    const response = await fetch(`${apiUrl}/delete-todo/${id}`, {
+    const response = await fetch(`${apiUrl}/DELETE-item/${id}`, {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
     });
     setChecklistItems(updatedItems);
   };
@@ -97,11 +93,9 @@ function MainC() {
         item.id === id ? { ...item, text: editInputValue } : item
       )
     );
-    const response = await fetch(`${apiUrl}/delete-todo/${id}`, {
+    const response = await fetch(`${apiUrl}/edit-item/${id}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
     });
     setEditItemId(null); // Exit edit mode
     setEditInputValue("");

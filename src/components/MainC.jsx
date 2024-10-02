@@ -19,12 +19,19 @@ function MainC() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${apiUrl}/todo`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${apiUrl}/todo`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data.todo.length); // Error if 'items' is undefined or not an array
+          })
+      );
       const data = await response.json();
       if (data.todo.length > 0) {
         setChecklistItems(data.todo);

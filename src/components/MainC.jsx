@@ -23,7 +23,7 @@ function MainC() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": "https://unga-todo.netlify.app",
         },
       });
       const data = await response.json();
@@ -61,7 +61,7 @@ function MainC() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": "https://unga-todo.netlify.app",
         },
         body: JSON.stringify(newItem),
       });
@@ -80,7 +80,7 @@ function MainC() {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "https://unga-todo.netlify.app",
       },
     });
     setChecklistItems(updatedItems);
@@ -104,7 +104,7 @@ function MainC() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "https://unga-todo.netlify.app",
       },
     });
     setEditItemId(null); // Exit edit mode

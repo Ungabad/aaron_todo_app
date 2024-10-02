@@ -19,7 +19,13 @@ function MainC() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${apiUrl}/todo`);
+      const response = await fetch(`${apiUrl}/todo`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
       const data = await response.json();
       if (data.todo.length > 0) {
         setChecklistItems(data.todo);

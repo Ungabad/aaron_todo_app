@@ -18,37 +18,44 @@ function MainC() {
     import.meta.env.VITE_API_URL || "https://aaron-todo-backend.onrender.com";
 
   useEffect(() => {
+    // Define an async function to fetch data from the server
     const fetchData = async () => {
-      const response = await fetch(
-        `${apiUrl}/todo`,
-        {
+      try {
+        // Make a GET request to the specified API endpoint
+        const response = await fetch(`${apiUrl}/todo`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
+        });
+
+        // If the response is successful, parse its JSON data
+        const data = await response.json();
+
+        // If the response data contains items, update the state of the 'checklistItems' with the received data
+        if (data.todo.length > 0) {
+          setChecklistItems(data.todo);
+        } else {
+          // If no data is received, log an error message
+          console.error("No data received from the server.");
         }
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data.todo.length); // Error if 'items' is undefined or not an array
-          })
-      );
-      const data = await response.json();
-      if (data.todo.length > 0) {
-        setChecklistItems(data.todo);
-      } else {
-        console.error("No data received from the server.");
+      } catch (error) {
+        // If an error occurs during the fetch operation, log the error message
+        console.error("Error fetching data:", error);
       }
     };
+
+    // Call the fetchData function when the component mounts
     fetchData();
   }, []);
 
-  const handleCheckboxChange = (id) => {
+  function handleCheckboxChange(id) {
     setChecklistItems((prevItems) =>
       prevItems.map((item) =>
         item.id === id ? { ...item, completed: !item.completed } : item
       )
     );
-  };
+  }
 
   // Handle new item input change
   const handleInputChange = (e) => {

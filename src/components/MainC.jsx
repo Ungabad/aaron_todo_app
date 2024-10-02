@@ -55,6 +55,7 @@ function MainC() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify(newItem),
       });
@@ -71,6 +72,7 @@ function MainC() {
     const updatedItems = checklistItems.filter((item) => item.id !== id);
     const response = await fetch(`${apiUrl}/delete-todo/${id}`, {
       method: "DELETE",
+      headers: { "Access-Control-Allow-Origin": "*" },
     });
     setChecklistItems(updatedItems);
   };
@@ -91,6 +93,7 @@ function MainC() {
     );
     const response = await fetch(`${apiUrl}/delete-todo/${id}`, {
       method: "POST",
+      headers: { "Access-Control-Allow-Origin": "*" },
     });
     setEditItemId(null); // Exit edit mode
     setEditInputValue("");

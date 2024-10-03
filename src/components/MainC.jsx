@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 
 // Main component that renders CheckListItem components using map
 function MainC() {
-  const [checklistItems, setChecklistItems] = useState(todoData);
+  const [checklistItems, setChecklistItems] = useState([]);
   const [newItemText, setNewItemText] = useState("");
   const [editItemId, setEditItemId] = useState(null);
   const [editInputValue, setEditInputValue] = useState("");

@@ -58,7 +58,7 @@ function MainC() {
       };
       const response = await fetch(`${apiUrl}/add-todo`, {
         method: "POST",
-        headers: { "Content-Type": "application/JSON" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newItem),
       });
       if (!response.ok) {
@@ -109,7 +109,7 @@ function MainC() {
   const checklistComponents = checklistItems.map((todo) => (
     <CheckListItem
       key={todo._id}
-      id={todo._id}
+      _id={todo._id}
       text={todo.text}
       completed={todo.completed}
       isEditing={editItemId === todo._id} // Check if this item is in edit mode

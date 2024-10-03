@@ -19,28 +19,20 @@ function MainC() {
 
   useEffect(() => {
     // Define an async function to fetch data from the server
-    try {
-      const fetchData = async () => {
-        // Make a GET request to the specified API endpoint
+    const fetchData = async () => {
+      try {
         const response = await fetch(`${apiUrl}/todo`);
-        // If the response is successful, parse its JSON data
         const data = await response.json();
-
-        // If the response data contains items, update the state of the 'checklistItems' with the received data
         if (data.todo.length > 0) {
           setChecklistItems(data.todo);
         } else {
-          // If no data is received, log an error message
           console.error("No data received from the server.");
         }
-      };
-    } catch (error) {
-      // If an error occurs during the fetch operation, log the error message
-      console.error("Error fetching data:", error);
-    }
-
-    // Call the fetchData function when the component mounts
-    fetchData();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+      fetchData();
+    };
   }, []);
 
   function handleCheckboxChange(id) {

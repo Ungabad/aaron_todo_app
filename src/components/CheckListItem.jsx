@@ -5,7 +5,7 @@ import Checkbox from "@mui/material/Checkbox";
 
 // Reusable CheckListItem component
 function CheckListItem({
-  id,
+  _id,
   text,
   completed,
   isEditing,
@@ -33,7 +33,7 @@ function CheckListItem({
         <Checkbox
           sx={{ color: pink[800], "&.Mui-checked": { color: pink[600] } }}
           checked={completed}
-          onChange={() => handleCheckboxChange(id)}
+          onChange={() => handleCheckboxChange(_id)}
         />
         <div className='card-buttons'>
           <Button
@@ -41,7 +41,7 @@ function CheckListItem({
             variant='outlined'
             sx={{ borderColor: pink[800], color: pink[800] }}
             className='card-button'
-            onClick={() => handleDeleteItem(id)}
+            onClick={() => handleDeleteItem(_id)}
           >
             Delete
           </Button>
@@ -52,7 +52,7 @@ function CheckListItem({
               variant='outlined'
               sx={{ borderColor: pink[800], color: pink[800] }}
               className='card-button'
-              onClick={() => handleSaveEdit(id)}
+              onClick={() => handleSaveEdit(_id)}
             >
               Save
             </Button>
@@ -63,7 +63,7 @@ function CheckListItem({
               variant='outlined'
               sx={{ borderColor: pink[800], color: pink[800] }}
               className='card-button'
-              onClick={() => handleEditItem(id)}
+              onClick={() => handleEditItem(_id)}
             >
               Edit
             </Button>

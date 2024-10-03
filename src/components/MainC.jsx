@@ -38,7 +38,7 @@ function MainC() {
   function handleCheckboxChange(id) {
     setChecklistItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id ? { ...item, completed: !item.completed } : item
+        item._id === id ? { ...item, completed: !item.completed } : item
       )
     );
   }
@@ -71,7 +71,7 @@ function MainC() {
 
   // Function to handle deleting an item from the list
   const handleDeleteItem = async (id) => {
-    const updatedItems = checklistItems.filter((item) => item.id !== id);
+    const updatedItems = checklistItems.filter((item) => item._id !== id);
     const response = await fetch(`${apiUrl}/delete-item/${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -81,7 +81,7 @@ function MainC() {
 
   // Switch to edit mode for a specific item
   const handleEditItem = (id) => {
-    const itemToEdit = checklistItems.find((item) => item.id === id);
+    const itemToEdit = checklistItems.find((item) => item._id === id);
     setEditItemId(id);
     setEditInputValue(itemToEdit.text);
   };
@@ -90,7 +90,7 @@ function MainC() {
   const handleSaveEdit = async (id) => {
     setChecklistItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id ? { ...item, text: editInputValue } : item
+        item._id === id ? { ...item, text: editInputValue } : item
       )
     );
     const response = await fetch(`${apiUrl}/edit-item/${id}`, {
@@ -108,11 +108,11 @@ function MainC() {
 
   const checklistComponents = checklistItems.map((todo) => (
     <CheckListItem
-      key={todo.id}
-      id={todo.id}
+      key={todo._id}
+      id={todo._id}
       text={todo.text}
       completed={todo.completed}
-      isEditing={editItemId === todo.id} // Check if this item is in edit mode
+      isEditing={editItemId === todo._id} // Check if this item is in edit mode
       handleCheckboxChange={handleCheckboxChange}
       handleDeleteItem={handleDeleteItem}
       handleEditItem={handleEditItem}

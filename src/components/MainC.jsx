@@ -22,13 +22,7 @@ function MainC() {
     try {
       const fetchData = async () => {
         // Make a GET request to the specified API endpoint
-        const response = await fetch(`${apiUrl}/todo`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
+        const response = await fetch(`${apiUrl}/todo`);
         // If the response is successful, parse its JSON data
         const data = await response.json();
 

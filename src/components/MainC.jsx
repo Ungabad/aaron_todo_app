@@ -86,7 +86,7 @@ function MainC() {
   // Function to handle deleting an item from the list
   const handleDeleteItem = async (id) => {
     const updatedItems = checklistItems.filter((item) => item.id !== id);
-    const response = await fetch(`${apiUrl}/DELETE-item/${id}`, {
+    const response = await fetch(`${apiUrl}/delete-item/${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });

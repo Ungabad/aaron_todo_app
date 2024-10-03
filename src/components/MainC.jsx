@@ -19,8 +19,8 @@ function MainC() {
 
   useEffect(() => {
     // Define an async function to fetch data from the server
-    const fetchData = async () => {
-      try {
+    try {
+      const fetchData = async () => {
         // Make a GET request to the specified API endpoint
         const response = await fetch(`${apiUrl}/todo`, {
           method: "GET",
@@ -39,11 +39,11 @@ function MainC() {
           // If no data is received, log an error message
           console.error("No data received from the server.");
         }
-      } catch (error) {
-        // If an error occurs during the fetch operation, log the error message
-        console.error("Error fetching data:", error);
-      }
-    };
+      };
+    } catch (error) {
+      // If an error occurs during the fetch operation, log the error message
+      console.error("Error fetching data:", error);
+    }
 
     // Call the fetchData function when the component mounts
     fetchData();

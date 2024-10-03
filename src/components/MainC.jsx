@@ -6,16 +6,16 @@ import Button from "@mui/material/Button";
 import { pink } from "@mui/material/colors";
 import TextField from "@mui/material/TextField";
 
+// Use the correct backend URL for the Express server
+const apiUrl =
+  import.meta.env.VITE_API_URL || "https://aaron-todo-backend.onrender.com";
+
 // Main component that renders CheckListItem components using map
 function MainC() {
   const [checklistItems, setChecklistItems] = useState([]);
   const [newItemText, setNewItemText] = useState("");
   const [editItemId, setEditItemId] = useState(null);
   const [editInputValue, setEditInputValue] = useState("");
-
-  // Use the correct backend URL for the Express server
-  const apiUrl =
-    import.meta.env.VITE_API_URL || "https://aaron-todo-backend.onrender.com";
 
   useEffect(() => {
     // Define an async function to fetch data from the server
@@ -74,7 +74,6 @@ function MainC() {
     const updatedItems = checklistItems.filter((item) => item._id !== id);
     const response = await fetch(`${apiUrl}/delete-item/${id}`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/JSON" },
     });
     setChecklistItems(updatedItems);
   };
@@ -96,6 +95,10 @@ function MainC() {
     const response = await fetch(`${apiUrl}/edit-item/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/JSON" },
+      body: JSON.stringify({
+        text: editInputValue,
+        completed: todo.completed, // Keep the completed status unchanged
+      }),
     });
     setEditItemId(null); // Exit edit mode
     setEditInputValue("");

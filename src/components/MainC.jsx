@@ -16,6 +16,9 @@ function MainC() {
   const [newItemText, setNewItemText] = useState("");
   const [editItemId, setEditItemId] = useState(null);
   const [editInputValue, setEditInputValue] = useState("");
+  // Use the correct backend URL for the Express server
+  const apiUrl =
+    import.meta.env.VITE_API_URL || "https://aaron-todo-backend.onrender.com";
 
   useEffect(() => {
     // Define an async function to fetch data from the server

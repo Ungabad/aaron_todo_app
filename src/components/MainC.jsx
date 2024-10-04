@@ -38,12 +38,20 @@ function MainC() {
     };
   }, []);
 
-  function handleCheckboxChange(id) {
+  function handleCheckboxChange = async (id) => {
     setChecklistItems((prevItems) =>
       prevItems.map((item) =>
         item._id === id ? { ...item, completed: !item.completed } : item
       )
     );
+    const response = await fetch(`${apiUrl}/edit-item/${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/JSON" },
+      body: JSON.stringify({
+        text: editInputValue,
+        completed: todo.completed, // Keep the completed status unchanged
+      }),
+    });
   }
 
   // Handle new item input change

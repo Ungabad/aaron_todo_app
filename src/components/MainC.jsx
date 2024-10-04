@@ -38,7 +38,7 @@ function MainC() {
     };
   }, []);
 
-  function handleCheckboxChange = async (id) => {
+  const handleCheckboxChange = async (id) => {
     setChecklistItems((prevItems) =>
       prevItems.map((item) =>
         item._id === id ? { ...item, completed: !item.completed } : item
@@ -52,7 +52,7 @@ function MainC() {
         completed: todo.completed, // Keep the completed status unchanged
       }),
     });
-  }
+  };
 
   // Handle new item input change
   const handleInputChange = (e) => {

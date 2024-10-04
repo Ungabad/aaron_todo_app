@@ -55,7 +55,6 @@ function MainC() {
   const addNewItem = async () => {
     if (newItemText.trim()) {
       const newItem = {
-        id: checklistItems.length + 2,
         text: newItemText,
         completed: false,
       };

@@ -26,8 +26,9 @@ function MainC() {
       try {
         const response = await fetch(`${apiUrl}/todo`);
         const data = await response.json();
-        console.log("data", data.todos)
-        if (data.todos.length > 0) {
+ 
+        if (data.todos && data.todos.length > 0) {
+          console.log("data", data.todos)
           console.log("Successfully fetched initial todos")
           setChecklistItems(data.todos);
         } else {

@@ -26,8 +26,8 @@ function MainC() {
       try {
         const response = await fetch(`${apiUrl}/todo`);
         const data = await response.json();
-        if (data.todo.length > 0) {
-          setChecklistItems(data.todo);
+        if (data.todos.length > 0) {
+          setChecklistItems(data.todos);
         } else {
           console.error("No data received from the server.");
         }

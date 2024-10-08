@@ -28,8 +28,6 @@ function MainC() {
         const data = await response.json();
  
         if (data.todos && data.todos.length > 0) {
-          console.log("data", data.todos)
-          console.log("Successfully fetched initial todos")
           setChecklistItems(data.todos);
         } else {
           console.error("No data received from the server.");
@@ -64,7 +62,6 @@ function MainC() {
 
   // Handle adding a new item to the list
   const addNewItem = async () => {
-    console.log("newItemText", newItemText)
     if (newItemText.trim()) {
     
       const newItem = {

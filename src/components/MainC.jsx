@@ -36,6 +36,7 @@ function MainC() {
       }
     };
     fetchData();
+    console.log("Fetched Data Successfully During Initial Render")
   }, []);
 
   const handleCheckboxChange = async (id) => {
@@ -63,8 +64,7 @@ function MainC() {
   const addNewItem = async () => {
     if (newItemText.trim()) {
       const newItem = {
-        text: newItemText,
-        completed: false,
+        text: newItemText
       };
       const response = await fetch(`${apiUrl}/add-todo`, {
         method: "POST",
@@ -74,7 +74,8 @@ function MainC() {
       if (!response.ok) {
         console.error("Failed to add");
       }
-      setChecklistItems((prevItems) => [...prevItems, newItem]);
+      const createdItem= await response.json()
+      setChecklistItems((prevItems) => [...prevItems, createdItem]);
       setNewItemText(""); // Reset the input field
     }
   };

@@ -153,7 +153,7 @@ function MainC() {
           variant='outlined'
           sx={{ borderColor: pink[800], color: pink[800] }}
           className='card-button'
-          onClick={()=>addNewItem}
+          onClick={()=>addNewItem()}
           style={{ marginLeft: "20px" }}
         >
           Add Item

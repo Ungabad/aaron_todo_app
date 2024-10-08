@@ -146,14 +146,14 @@ function MainC() {
           type='text'
           placeholder='Add new item...'
           value={newItemText}
-          onChange={handleInputChange}
+          onChange={(e)=>handleInputChange(e)}
         />
         <Button
           size='small'
           variant='outlined'
           sx={{ borderColor: pink[800], color: pink[800] }}
           className='card-button'
-          onClick={addNewItem}
+          onClick={()=>addNewItem}
           style={{ marginLeft: "20px" }}
         >
           Add Item

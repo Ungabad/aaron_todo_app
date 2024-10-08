@@ -7,8 +7,8 @@ import { pink } from "@mui/material/colors";
 import TextField from "@mui/material/TextField";
 
 // Use the correct backend URL for the Express server
-const apiUrl =
-  import.meta.env.VITE_API_URL || "https://aaron-todo-backend.onrender.com";
+// const apiUrl =
+//   import.meta.env.VITE_API_URL || "https://aaron-todo-backend.onrender.com";
 
 // Main component that renders CheckListItem components using map
 function MainC() {
@@ -27,6 +27,7 @@ function MainC() {
         const response = await fetch(`${apiUrl}/todo`);
         const data = await response.json();
         if (data.todos.length > 0) {
+          console.log("Successfully fetched initial todos")
           setChecklistItems(data.todos);
         } else {
           console.error("No data received from the server.");
@@ -36,7 +37,6 @@ function MainC() {
       }
     };
     fetchData();
-    console.log("Fetched Data Successfully During Initial Render")
   }, []);
 
   const handleCheckboxChange = async (id) => {
@@ -62,7 +62,9 @@ function MainC() {
 
   // Handle adding a new item to the list
   const addNewItem = async () => {
+    console.log("newItemText", newItemText)
     if (newItemText.trim()) {
+    
       const newItem = {
         text: newItemText
       };

@@ -16,7 +16,6 @@ function MainC() {
   const [newItemText, setNewItemText] = useState("");
   const [editItemId, setEditItemId] = useState(null);
   const [editInputValue, setEditInputValue] = useState("");
-  const [isEditing, setIsEditing] = useState(false)
   // Use the correct backend URL for the Express server
   const apiUrl =
     import.meta.env.VITE_API_URL || "https://aaron-todo-backend.onrender.com";
@@ -27,7 +26,7 @@ function MainC() {
       try {
         const response = await fetch(`${apiUrl}/todo`);
         const data = await response.json();
- 
+
         if (data.todos && data.todos.length > 0) {
           setChecklistItems(data.todos);
         } else {
@@ -41,8 +40,8 @@ function MainC() {
   }, []);
 
   const handleCheckboxChange = async (id) => {
-    const itemClicked = [... checklistItems].find(item => item._id === id)
-    const itemToUpdate = {... itemClicked, completed : !itemClicked.completed}
+    const itemClicked = [...checklistItems].find((item) => item._id === id);
+    const itemToUpdate = { ...itemClicked, completed: !itemClicked.completed };
     const response = await fetch(`${apiUrl}/edit-item/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/JSON" },
@@ -51,15 +50,12 @@ function MainC() {
         completed: itemToUpdate.completed, // Keep the completed status unchanged
       }),
     });
-    const updatedItem = await response.json()
-    console.log(updatedItem, "updatedItem")
+    const updatedItem = await response.json();
+    console.log(updatedItem, "updatedItem");
     setChecklistItems((prevItems) =>
-      prevItems.map((item) =>
-        item._id === id ? updatedItem : item
-      )
+      prevItems.map((item) => (item._id === id ? updatedItem : item))
     );
   };
-  
 
   // Handle new item input change
   const handleInputChange = (e) => {
@@ -69,9 +65,8 @@ function MainC() {
   // Handle adding a new item to the list
   const addNewItem = async () => {
     if (newItemText.trim()) {
-    
       const newItem = {
-        text: newItemText
+        text: newItemText,
       };
       const response = await fetch(`${apiUrl}/add-todo`, {
         method: "POST",
@@ -81,7 +76,7 @@ function MainC() {
       if (!response.ok) {
         console.error("Failed to add");
       }
-      const createdItem= await response.json()
+      const createdItem = await response.json();
       setChecklistItems((prevItems) => [...prevItems, createdItem]);
       setNewItemText(""); // Reset the input field
     }
@@ -101,13 +96,12 @@ function MainC() {
     const itemToEdit = checklistItems.find((item) => item._id === id);
     setEditItemId(id);
     setEditInputValue(itemToEdit.text);
-    setIsEditing(true)
   };
 
   // Save the edited item and exit edit mode
   const handleSaveEdit = async (id) => {
-    const itemClicked = [... checklistItems].find(item => item._id === id)
-    const itemToUpdate = {... itemClicked, text : editInputValue}
+    const itemClicked = [...checklistItems].find((item) => item._id === id);
+    const itemToUpdate = { ...itemClicked, text: editInputValue };
     const response = await fetch(`${apiUrl}/edit-item/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/JSON" },
@@ -116,14 +110,13 @@ function MainC() {
         completed: itemToUpdate.completed, // Keep the completed status unchanged
       }),
     });
-    const updatedItem = await response.json()
-    console.log(updatedItem, "updatedItem")
+    const updatedItem = await response.json();
+    console.log(updatedItem, "updatedItem");
     setChecklistItems((prevItems) =>
-      prevItems.map((item) =>
-        item._id === id ? updatedItem : item
-      )
+      prevItems.map((item) => (item._id === id ? updatedItem : item))
     );
-    setIsEditing(false)
+    setEditItemId(null);
+    setEditInputValue("");
   };
 
   // Update the input value while editing
@@ -157,14 +150,14 @@ function MainC() {
           type='text'
           placeholder='Add new item...'
           value={newItemText}
-          onChange={(e)=>handleInputChange(e)}
+          onChange={(e) => handleInputChange(e)}
         />
         <Button
           size='small'
           variant='outlined'
           sx={{ borderColor: pink[800], color: pink[800] }}
           className='card-button'
-          onClick={()=>addNewItem()}
+          onClick={() => addNewItem()}
           style={{ marginLeft: "20px" }}
         >
           Add Item

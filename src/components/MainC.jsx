@@ -7,8 +7,8 @@ import { pink } from "@mui/material/colors";
 import TextField from "@mui/material/TextField";
 
 // Use the correct backend URL for the Express server
-const apiUrl =
-  import.meta.env.VITE_API_URL || "https://aaron-todo-backend.onrender.com";
+// const apiUrl =
+//   import.meta.env.VITE_API_URL || "https://aaron-todo-backend.onrender.com";
 
 // Main component that renders CheckListItem components using map
 function MainC() {
@@ -26,8 +26,9 @@ function MainC() {
       try {
         const response = await fetch(`${apiUrl}/todo`);
         const data = await response.json();
-        if (data.todo.length > 0) {
-          setChecklistItems(data.todo);
+ 
+        if (data.todos && data.todos.length > 0) {
+          setChecklistItems(data.todos);
         } else {
           console.error("No data received from the server.");
         }
@@ -67,9 +68,9 @@ function MainC() {
   // Handle adding a new item to the list
   const addNewItem = async () => {
     if (newItemText.trim()) {
+    
       const newItem = {
-        text: newItemText,
-        completed: false,
+        text: newItemText
       };
       const response = await fetch(`${apiUrl}/add-todo`, {
         method: "POST",
@@ -79,7 +80,8 @@ function MainC() {
       if (!response.ok) {
         console.error("Failed to add");
       }
-      setChecklistItems((prevItems) => [...prevItems, newItem]);
+      const createdItem= await response.json()
+      setChecklistItems((prevItems) => [...prevItems, createdItem]);
       setNewItemText(""); // Reset the input field
     }
   };
@@ -150,14 +152,14 @@ function MainC() {
           type='text'
           placeholder='Add new item...'
           value={newItemText}
-          onChange={handleInputChange}
+          onChange={(e)=>handleInputChange(e)}
         />
         <Button
           size='small'
           variant='outlined'
           sx={{ borderColor: pink[800], color: pink[800] }}
           className='card-button'
-          onClick={addNewItem}
+          onClick={()=>addNewItem()}
           style={{ marginLeft: "20px" }}
         >
           Add Item

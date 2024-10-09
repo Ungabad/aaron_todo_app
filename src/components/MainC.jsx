@@ -104,21 +104,23 @@ function MainC() {
 
   // Save the edited item and exit edit mode
   const handleSaveEdit = async (id) => {
-    setChecklistItems((prevItems) =>
-      prevItems.map((item) =>
-        item._id === id ? { ...item, text: editInputValue } : item
-      )
-    );
+    const itemClicked = [... checklistItems].find(item => item._id === id)
+    const itemToUpdate = {... itemClicked, text : editInputValue}
     const response = await fetch(`${apiUrl}/edit-item/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/JSON" },
       body: JSON.stringify({
-        text: editInputValue,
-        completed: todo.completed, // Keep the completed status unchanged
+        text: itemToUpdate.text,
+        completed: itemToUpdate.completed, // Keep the completed status unchanged
       }),
     });
-    setEditItemId(null); // Exit edit mode
-    setEditInputValue("");
+    const updatedItem = await response.json()
+    console.log(updatedItem, "updatedItem")
+    setChecklistItems((prevItems) =>
+      prevItems.map((item) =>
+        item._id === id ? updatedItem : item
+      )
+    );
   };
 
   // Update the input value while editing

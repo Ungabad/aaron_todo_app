@@ -39,20 +39,25 @@ function MainC() {
   }, []);
 
   const handleCheckboxChange = async (id) => {
-    setChecklistItems((prevItems) =>
-      prevItems.map((item) =>
-        item._id === id ? { ...item, completed: !item.completed } : item
-      )
-    );
+    const itemClicked = [... checklistItems].find(item => item._id === id)
+    const itemToUpdate = {... itemClicked, completed : !itemClicked.completed}
     const response = await fetch(`${apiUrl}/edit-item/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/JSON" },
       body: JSON.stringify({
-        text: editInputValue,
-        completed: todo.completed, // Keep the completed status unchanged
+        text: itemToUpdate.text,
+        completed: itemToUpdate.completed, // Keep the completed status unchanged
       }),
     });
+    const updatedItem = await response.json()
+    console.log(updatedItem, "updatedItem")
+    setChecklistItems((prevItems) =>
+      prevItems.map((item) =>
+        item._id === id ? updatedItem : item
+      )
+    );
   };
+  
 
   // Handle new item input change
   const handleInputChange = (e) => {

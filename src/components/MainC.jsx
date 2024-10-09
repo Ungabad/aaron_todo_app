@@ -16,6 +16,7 @@ function MainC() {
   const [newItemText, setNewItemText] = useState("");
   const [editItemId, setEditItemId] = useState(null);
   const [editInputValue, setEditInputValue] = useState("");
+  const [isEditing, setIsEditing] = useState(false)
   // Use the correct backend URL for the Express server
   const apiUrl =
     import.meta.env.VITE_API_URL || "https://aaron-todo-backend.onrender.com";
@@ -100,6 +101,7 @@ function MainC() {
     const itemToEdit = checklistItems.find((item) => item._id === id);
     setEditItemId(id);
     setEditInputValue(itemToEdit.text);
+    setIsEditing(true)
   };
 
   // Save the edited item and exit edit mode
@@ -121,6 +123,7 @@ function MainC() {
         item._id === id ? updatedItem : item
       )
     );
+    setIsEditing(false)
   };
 
   // Update the input value while editing
